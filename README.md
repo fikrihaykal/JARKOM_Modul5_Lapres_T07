@@ -11,7 +11,7 @@ Anggota:<br />
 ## Subnetting (VLSM)
   Menghitung IP yang dibutuhkan serta memberi label `AX` untuk setiap netmask
   
-  ![img](https://github.com/fikrihaykal/JARKOM_Modul5_Lapres_T07/blob/main/img/Topologi%20VLSM.png?raw=true)<br /><br />
+  ![img](https://github.com/fikrihaykal/JARKOM_Modul5_Lapres_T07/blob/main/img/Topologi%20VLSM.jpg?raw=true)<br /><br />
   
   <table>
     <tr>
