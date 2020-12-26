@@ -47,7 +47,7 @@ Anggota:<br />
   </table>
   
   Menghitung pembagian IP berdasarkan NID dan Netmask
-  ![img](https://github.com/Falconozura/JARKOM_Modul4_Lapres_T07/blob/main/img/VLSM.png?raw=true)<br /><br />
+  ![img](https://github.com/fikrihaykal/JARKOM_Modul5_Lapres_T07/blob/main/img/VLSM.png?raw=true)<br /><br />
 
 ## Topologi
   Membuat file <b>topologi.sh</b> sesuai rancangan topologi
