@@ -8,6 +8,47 @@ Anggota:<br />
 - ![fikri](https://img.shields.io/badge/Fikri%20Haykal-05311840000006-blueviolet)<br />
 - ![syarif](https://img.shields.io/badge/Fancista%20Syarif%20H.-05311840000027-blueviolet)<br />
 
+## Subnetting (VLSM)
+  Menghitung IP yang dibutuhkan serta memberi label `AX` untuk setiap netmask
+  
+  ![img](https://github.com/fikrihaykal/JARKOM_Modul5_Lapres_T07/blob/main/img/Topologi%20VLSM.png?raw=true)<br /><br />
+  
+  <table>
+    <tr>
+      <th>Label</th>
+      <th>Jumlah IP</th>
+      <th>Netmask</th>
+    </tr>
+    <tr>
+      <td>A1</td>
+      <td>201</td>
+      <td>/24</td>
+    </tr>
+    <tr>
+      <td>A2</td>
+      <td>2</td>
+      <td>/30</td>
+    </tr>
+    <tr>
+      <td>A3</td>
+      <td>2</td>
+      <td>/30</td>
+    </tr>
+    <tr>
+      <td>A4</td>
+      <td>211</td>
+      <td>/24</td>
+    </tr>
+    <tr>
+      <td>A5</td>
+      <td>3</td>
+      <td>/29</td>
+    </tr>
+  </table>
+  
+  Menghitung pembagian IP berdasarkan NID dan Netmask
+  ![img](https://github.com/Falconozura/JARKOM_Modul4_Lapres_T07/blob/main/img/Topologi%20VLSM.png?raw=true)<br /><br />
+
 ## Topologi
   Membuat file <b>topologi.sh</b> sesuai rancangan topologi
 ```
