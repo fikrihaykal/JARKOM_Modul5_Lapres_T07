@@ -47,7 +47,7 @@ Anggota:<br />
   </table>
   
   Menghitung pembagian IP berdasarkan NID dan Netmask
-  ![img](https://github.com/Falconozura/JARKOM_Modul4_Lapres_T07/blob/main/img/Topologi%20VLSM.png?raw=true)<br /><br />
+  ![img](https://github.com/Falconozura/JARKOM_Modul4_Lapres_T07/blob/main/img/VLSM.png?raw=true)<br /><br />
 
 ## Topologi
   Membuat file <b>topologi.sh</b> sesuai rancangan topologi
@@ -239,7 +239,7 @@ Karena tim kalian maksimal terdiri dari 3 orang, Bibah meminta kalian untuk memb
 <b><i>Penyelesaian :</i></b><br />
 Membuat soal3.sh di MALANG dan MOJOKERTO
 ```
-iptables -A -p icmp -m connlimit --connlimit-above 2 --connlimit-mask 0 -j DROP
+iptables -A -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
 ```
 
 ### 4. Membatasi Waktu Akses di Subnet SIDOARJO
