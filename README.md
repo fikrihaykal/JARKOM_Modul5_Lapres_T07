@@ -207,17 +207,15 @@ route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.168.0.5
 
 ## Setting DHCP Server dan Relay
 ### Mojokerto
-<ol>
-  <li>Menginstall <b>DHCP Server</b> dengan perintah `apt-get install isc-dhcp-server`</li>
-  <li>Mengatur <b>INTERFACES</b> menjadi `eth0`</li>
-  <li>Deklarasi subnet B1<br />
-    ```
+  1. Menginstall <b>DHCP Server</b> dengan perintah `apt-get install isc-dhcp-server`<br />
+  2. Mengatur <b>INTERFACES</b> menjadi `eth0`<br />
+  3. Deklarasi subnet B1<br />
+  
     subnet 10.151.83.136 netmask 255.255.255.248 {
     }
-    ```
-  </li>
-  <li>Deklarasi subnet A1<br />
-    ```
+    
+  4. Deklarasi subnet A1<br />
+  
     subnet 192.168.2.0 netmask 255.255.255.0 {
       range 192.168.2.2 192.168.2.201;
       option routers 192.168.2.1;
@@ -226,10 +224,9 @@ route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.168.0.5
       default-lease-time 600;
       max-lease-time 7200;
     }
-    ```
-  </li>
-  <li>Deklarasi subnet A4<br />
-    ```
+    
+  5. Deklarasi subnet A4<br />
+    
     subnet 192.168.3.0 netmask 255.255.255.0 {
       range 192.168.3.2 192.168.2.211;
       option routers 192.168.3.1;
@@ -238,30 +235,21 @@ route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.168.0.5
       default-lease-time 600;
       max-lease-time 7200;
     }
-    ```
-  </li>
-</ol>
 
 ### Batu
-<ol>
-  <li>Menginstall <b>DHCP Relay</b> dengan perintah `apt-get install isc-dhcp-relay`</li>
-  <li>Mengatur <b>SERVERS</b> menjadi `10.151.83.138`</li>
-  <li>Mengatur <b>INTERFACES</b> menjadi `eth0 eth1 eth2`</li>
-</ol>
+  1. Menginstall <b>DHCP Relay</b> dengan perintah `apt-get install isc-dhcp-relay`<br />
+  2. Mengatur <b>SERVERS</b> menjadi `10.151.83.138`<br />
+  3. Mengatur <b>INTERFACES</b> menjadi `eth0 eth1 eth2`<br />
 
 ### Surabaya
-<ol>
-  <li>Menginstall <b>DHCP Relay</b> dengan perintah `apt-get install isc-dhcp-relay`</li>
-  <li>Mengatur <b>SERVERS</b> menjadi `10.151.83.138`</li>
-  <li>Mengatur <b>INTERFACES</b> menjadi `eth1 eth2`</li>
-</ol>
+  1. Menginstall <b>DHCP Relay</b> dengan perintah `apt-get install isc-dhcp-relay`<br />
+  2. Mengatur <b>SERVERS</b> menjadi `10.151.83.138`<br />
+  3. Mengatur <b>INTERFACES</b> menjadi `eth1 eth2`<br />
 
 ### Kediri
-<ol>
-  <li>Menginstall <b>DHCP Relay</b> dengan perintah `apt-get install isc-dhcp-relay`</li>
-  <li>Mengatur <b>SERVERS</b> menjadi `10.151.83.138`</li>
-  <li>Mengatur <b>INTERFACES</b> menjadi `eth0 eth2`</li>
-</ol>
+  1. Menginstall <b>DHCP Relay</b> dengan perintah `apt-get install isc-dhcp-relay`<br />
+  2. Mengatur <b>SERVERS</b> menjadi `10.151.83.138`<br />
+  3. Mengatur <b>INTERFACES</b> menjadi `eth0 eth2`<br />
 
 
 ## SOAL
