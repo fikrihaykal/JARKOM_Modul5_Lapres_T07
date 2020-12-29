@@ -157,19 +157,13 @@ gateway 10.151.83.137
 ### Sidoarjo
 ```
 auto eth0
-iface eth0 inet static
-address 192.168.2.2
-netmask 255.255.255.0
-gateway 192.168.2.1
+iface eth0 inet dhcp
 ```
 
 ### Gresik
 ```
 auto eth0
-iface eth0 inet static
-address 192.168.3.2
-netmask 255.255.255.0
-gateway 192.168.3.1
+iface eth0 inet dhcp
 ```
 
 ### Probolinggo
@@ -212,6 +206,62 @@ route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.168.0.5
 ```
 
 ## Setting DHCP Server dan Relay
+### Mojokerto
+<ol>
+  <li>Menginstall <b>DHCP Server</b> dengan perintah `apt-get install isc-dhcp-server`</li>
+  <li>Mengatur <b>INTERFACES</b> menjadi `eth0`</li>
+  <li>Deklarasi subnet B1<br />
+    ```
+    subnet 10.151.83.136 netmask 255.255.255.248 {
+    }
+    ```
+  </li>
+  <li>Deklarasi subnet A1<br />
+    ```
+    subnet 192.168.2.0 netmask 255.255.255.0 {
+      range 192.168.2.2 192.168.2.201;
+      option routers 192.168.2.1;
+      option broadcast-address 192.168.2.255;
+      option domain-name-servers 10.151.83.139, 202.46.129.2, 10.151.36.7;
+      default-lease-time 600;
+      max-lease-time 7200;
+    }
+    ```
+  </li>
+  <li>Deklarasi subnet A4<br />
+    ```
+    subnet 192.168.3.0 netmask 255.255.255.0 {
+      range 192.168.3.2 192.168.2.211;
+      option routers 192.168.3.1;
+      option broadcast-address 192.168.3.255;
+      option domain-name-servers 10.151.83.139, 202.46.129.2, 10.151.36.7;
+      default-lease-time 600;
+      max-lease-time 7200;
+    }
+    ```
+  </li>
+</ol>
+
+### Batu
+<ol>
+  <li>Menginstall <b>DHCP Relay</b> dengan perintah `apt-get install isc-dhcp-relay`</li>
+  <li>Mengatur <b>SERVERS</b> menjadi `10.151.83.138`</li>
+  <li>Mengatur <b>INTERFACES</b> menjadi `eth0 eth1 eth2`</li>
+</ol>
+
+### Surabaya
+<ol>
+  <li>Menginstall <b>DHCP Relay</b> dengan perintah `apt-get install isc-dhcp-relay`</li>
+  <li>Mengatur <b>SERVERS</b> menjadi `10.151.83.138`</li>
+  <li>Mengatur <b>INTERFACES</b> menjadi `eth1 eth2`</li>
+</ol>
+
+### Kediri
+<ol>
+  <li>Menginstall <b>DHCP Relay</b> dengan perintah `apt-get install isc-dhcp-relay`</li>
+  <li>Mengatur <b>SERVERS</b> menjadi `10.151.83.138`</li>
+  <li>Mengatur <b>INTERFACES</b> menjadi `eth0 eth2`</li>
+</ol>
 
 
 ## SOAL
@@ -221,7 +271,7 @@ Agar topologi yang kalian buat dapat mengakses keluar, kalian diminta untuk meng
 <b><i>Penyelesaian :</i></b><br />
 Membuat soal1.sh di SURABAYA
 ```
-iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o eth0 -j SNAT --to-source 10.151.74.70
+iptables -t nat -A POSTROUTING -s 192.168.0.0/22 -o eth0 -j SNAT --to-source 10.151.74.70
 ```
 
 ### 2. Drop Akses SSH dari Luar Topologi pada SURABAYA
@@ -230,7 +280,7 @@ Kalian diminta untuk mendrop semua akses SSH dari luar Topologi (UML) Kalian pad
 <b><i>Penyelesaian :</i></b><br />
 Membuat soal2.sh di SURABAYA
 ```
-iptables -A FORWARD -p tcp --dport 22 -d 10.151.83.136/29 -i eth0 -j DROP
+iptables -A FORWARD -d 10.151.83.136/29 -i eth0 -p tcp -m tcp --dport 22 -j DROP
 ```
 
 ### 3. Membatasi Maksimal 3 Koneksi ICMP Secara Bersamaan
@@ -239,7 +289,7 @@ Karena tim kalian maksimal terdiri dari 3 orang, Bibah meminta kalian untuk memb
 <b><i>Penyelesaian :</i></b><br />
 Membuat soal3.sh di MALANG dan MOJOKERTO
 ```
-iptables -A -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
+iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
 ```
 
 ### 4. Membatasi Waktu Akses di Subnet SIDOARJO
@@ -250,8 +300,9 @@ SIDOARJO dan SUBNET GRESIK dengan peraturan sebagai berikut:
 <b><i>Penyelesaian :</i></b><br />
 Membuat soal4.sh di MALANG
 ```
-iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 07:00 --timestop 17:00 --weekdays Mon,Tue,Wed,Thu,Fri -j ACCEPT
-iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 17:01 --timestop 06:59 -j REJECT
+iptables -A INPUT -s 192.168.2.0/24 -m time --weekdays Sat,Sun -j REJECT
+iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 00:00 --timestop 06:59 --weekdays Mon,Tue,Wed,Thu,Fri -j REJECT
+iptables -A INPUT -s 192.168.2.0/24 -m time --timestart 17:01 --timestop 23:59 --weekdays Mon,Tue,Wed,Thu,Fri -j REJECT
 ```
 
 ### 5. Membatasi Waktu Akses di Subnet GRESIK
@@ -269,18 +320,28 @@ iptables -A INPUT -s 192.168.3.0/24 -m time --timestart 07:01 --timestop 16:59 -
 Karena kita memiliki 2 buah WEB Server, Bibah ingin SURABAYA disetting sehingga setiap request dari client yang mengakses DNS Server akan didistribusikan secara bergantian pada PROBOLINGGO port 80 dan MADIUN port 80.
 
 <b><i>Penyelesaian :</i></b><br />
+Membuat soal6.sh di SURABAYA
 ```
-
+iptables -A PREROUTING -t nat -p tcp -d 10.151.83.138 -m statistic --mode nth --every 2 --packet 0 -j DNAT --to-destination 192.168.0.11:80
+iptables -A PREROUTING -t nat -p tcp -d 10.151.83.138 -j DNAT --to-destination 192.168.0.10:80
 ```
 
 ### 7.
 Bibah ingin agar semua paket didrop oleh firewall (dalam topologi) tercatat dalam log pada setiap UML yang memiliki aturan drop.
 
 <b><i>Penyelesaian :</i></b><br />
-Membuat soal7.sh di SURABAYA, MALANG dan MOJOKERTO
+Membuat soal7.sh di SURABAYA
 ```
 iptables -N LOGGING 
-iptables -A FORWARD -j LOGGING 
+iptables -A FORWARD -d 10.151.83.136/29 -i eth0 -p tcp -m tcp --dport 22 -j LOGGING 
+iptables -A LOGGING -m limit --limit 2/min -j LOG --log-prefix "IPTables-Dropped: " --log-level 4
+iptables -A LOGGING -j DROP
+```
+
+Membuat soal7.sh di MALANG dan MOJOKERTO
+```
+iptables -N LOGGING 
+iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j LOGGING
 iptables -A LOGGING -m limit --limit 2/min -j LOG --log-prefix "IPTables-Dropped: " --log-level 4
 iptables -A LOGGING -j DROP
 ```
